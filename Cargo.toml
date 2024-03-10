@@ -1,0 +1,35 @@
+[package]
+name = "schnorr_pok"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = [ "M.A. Alghazwi" ]
+description = "Schnorr protocol for proof of knowledge of one or more discrete logs"
+
+[lib]
+doctest = false
+path = "src/lib.rs"
+
+[dependencies]
+ark-ff = { version = "^0.4.1", default-features = false }
+ark-ec = { version = "^0.4.1", default-features = false }
+ark-std = { version = "^0.4.0", default-features = false}
+ark-serialize = { version = "^0.4.1", default-features = false, features = [ "derive" ] }
+rayon = { version = "1", optional = true}
+digest = { version = "0.10", default-features = false, features = ["alloc"] }
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde_with = { version = "1.10.0", default-features = false, features = ["macros"] }
+zeroize = { version = "1.6.0", features = ["derive"] }
+itertools = "0.10.5"
+
+[dev-dependencies]
+blake2 = { version = "0.10", default-features = false }
+ark-bls12-381 = { version = "^0.4.0", default-features = false, features = [ "curve" ] }
+serde_json = "1.0"
+rmp-serde = "1.0"
+
+[features]
+default = [ "parallel" ]
+std = [ "ark-ff/std", "ark-ec/std", "ark-std/std", "ark-serialize/std", "serde/std"]
+print-trace = [ "ark-std/print-trace" ]
+parallel = [ "std", "ark-ff/parallel", "ark-ec/parallel", "ark-std/parallel", "rayon" ]
